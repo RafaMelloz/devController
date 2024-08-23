@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body{
+  @apply bg-zinc-50;
+}
+
+.fit-container{
+  @apply max-w-7xl w-full mx-auto  xl:px-0 px-3;
+}
