@@ -4,6 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { InputForm } from "../inputForm"
+import { api } from "@/lib/api"
+import { useRouter } from "next/navigation"
 
 
 
@@ -23,8 +25,15 @@ export function FormNewCustomer() {
         resolver: zodResolver(schema)
     })
 
-    function handleNewCustomer(data: FormValues){
-        console.log(data)  
+    const router = useRouter()
+
+    async function handleNewCustomer(data: FormValues){
+        await api.post("/api/customer", {
+            name: data.name,
+            email: data.email,
+            phone: data.phone
+        })
+        router.replace("/dashboard/customer")
     }
 
 
