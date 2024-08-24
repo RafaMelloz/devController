@@ -1,5 +1,6 @@
 import { CustomerCard } from "@/components/customerCard"
 import { authOptions } from "@/lib/auth"
+import prisma from "@/lib/prisma"
 import { getServerSession } from "next-auth"
 import Link from "next/link"
 import { redirect } from "next/navigation"
@@ -12,6 +13,12 @@ export default async function Customer() {
         redirect("/")
     }
 
+    const customers = await prisma.customer.findMany({
+        where: {
+            userId: session.user.id
+        }
+    })
+
     return (
         <main className="py-10">
             <div className="flex justify-between mb-6">
@@ -23,13 +30,10 @@ export default async function Customer() {
 
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <CustomerCard/>
-                <CustomerCard />
-                <CustomerCard />
-                <CustomerCard />
-                <CustomerCard />
-                <CustomerCard />
 
+                {customers.map((customer) => (
+                    <CustomerCard key={customer.id} id={customer.id} name={customer.name} email={customer.email} phone={customer.phone} />
+                ))}
             </div>
         </main>
     )

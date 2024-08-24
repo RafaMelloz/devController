@@ -33,7 +33,9 @@ export function FormNewCustomer() {
             email: data.email,
             phone: data.phone
         })
-        router.replace("/dashboard/customer")
+
+        router.refresh();
+        router.replace("/dashboard/customer");
     }
 
 
