@@ -4,8 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod"
 import { InputForm } from "../inputForm";
+import { api } from "@/lib/api";
+import { useRouter } from "next/navigation";
 
-export function FormNewTicket(){
+export function FormNewTicket({customerId}: {customerId: number}){
 
     const schema = z.object({
         name: z.string().min(1, "Digite o nome do cliente").max(255, "O nome do cliente é muito grande"),
@@ -18,10 +20,21 @@ export function FormNewTicket(){
         resolver: zodResolver(schema)
     })
 
+    const router = useRouter()
+
     
     async function registerTicket(data: FormData){
         try {
+            const res = await api.post("/api/ticket", {
+                name: data.name,
+                description: data.description,
+                customerId
+            })
 
+            setValue("name", "")
+            setValue("description", "")
+
+            router.refresh()
         }catch(err){
             console.log(err)
         }
@@ -37,7 +50,7 @@ export function FormNewTicket(){
                 {errors.description && <span className="text-red-500 text-sm my-1">{errors.description.message}</span>}
             </label>
 
-            <button type="submit" className="bg-blue-600 flex justify-center items-center gap-2 text-white w-full py-2 rounded text-lg">Cadastrar</button>
+            <button className="bg-blue-600 flex justify-center items-center gap-2 text-white w-full py-2 rounded text-lg">Cadastrar</button>
         </form>
     )
 }

@@ -38,3 +38,25 @@ export async function PATCH(req: Request){
     
     return NextResponse.json({message: 'Ticket fechado com sucesso'});
 }
+
+export async function POST(req: Request) {
+    const { customerId, name, description } = await req.json();
+
+    try {
+        await prisma.ticket.create({
+            data: {
+                name,
+                description,
+                status: 'ABERTO',
+                customerId,
+                priority: 'BAIXA'
+            }
+        })
+
+        console.log(customerId, name, description);
+
+        return NextResponse.json({ message: 'Ticket cadastrado com sucesso' });	
+    } catch (error) {
+        console.log(error);
+    }
+}

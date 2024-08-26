@@ -83,7 +83,7 @@ export default function OpenTicket() {
                 </section>
             )}
 
-        {customer && <FormNewTicket/>}   
+        {customer && <FormNewTicket customerId={customer.id}/>}   
     </main>
   )
 }

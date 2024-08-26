@@ -15,7 +15,10 @@ export default async function Dashboard() {
 
     const tickets = await prisma.ticket.findMany({
         where: {
-            userId: session.user.id as string
+            customer:{
+                userId: session.user.id
+            }
+            
         },include: {
             customer: true
         },
