@@ -13,12 +13,14 @@ export default async function Dashboard() {
         redirect("/")
     }
 
-
     const tickets = await prisma.ticket.findMany({
         where: {
             userId: session.user.id as string
         },include: {
             customer: true
+        },
+        orderBy: {
+            createdAt: 'desc'
         }
     })
 
