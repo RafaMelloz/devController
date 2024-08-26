@@ -1,5 +1,6 @@
 import { TicketItem } from "@/components/ticketItem";
 import { authOptions } from "@/lib/auth"
+import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth"
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -11,6 +12,16 @@ export default async function Dashboard() {
     if (!session || !session.user) {
         redirect("/")
     }
+
+
+    const tickets = await prisma.ticket.findMany({
+        where: {
+            userId: session.user.id as string
+        },include: {
+            customer: true
+        }
+    })
+
 
     return(
         <main className="py-10">
@@ -32,10 +43,15 @@ export default async function Dashboard() {
                 </thead>
 
                 <tbody className="divide-zinc-300 divide-y bg-blue-50/35">
-                    <TicketItem/>
-                    <TicketItem />
-                    <TicketItem />
-                    <TicketItem />
+                    {
+                        tickets.map(ticket => (
+                            <TicketItem
+                                key={ticket.id}
+                                ticket={ticket} 
+                            />
+                        ))
+                    }
+                    
 
                 </tbody>
             </table>
