@@ -51,8 +51,6 @@ export default async function Dashboard() {
                             />
                         ))
                     }
-                    
-
                 </tbody>
             </table>
         </main>

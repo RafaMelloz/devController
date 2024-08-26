@@ -1,7 +1,9 @@
 "use client"
 
 import { api } from "@/lib/api";
+import { ModalContext } from "@/providers/modal";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
 import { LuCheckCircle, LuClipboardList } from "react-icons/lu";
 interface TicketItemProps {
     ticket: {
@@ -28,10 +30,11 @@ interface TicketItemProps {
 export function TicketItem({ ticket }: TicketItemProps) {
 
     const router = useRouter();
+    const { setDetailsTicket } = useContext(ModalContext);
 
     async function handleTicketStatus() {
         try {
-            const res = await api.patch('api/ticket', {
+            await api.patch('api/ticket', {
                 id: ticket.id
             });
 
@@ -40,6 +43,10 @@ export function TicketItem({ ticket }: TicketItemProps) {
             console.log(error);
             
         }
+    }
+
+    const openModal = () =>{
+        setDetailsTicket({ticket});
     }
 
     return(
@@ -57,7 +64,7 @@ export function TicketItem({ ticket }: TicketItemProps) {
                     <LuCheckCircle size={24} />
                 </button>
 
-                <button className="text-blue-400">
+                <button className="text-blue-400" onClick={openModal}>
                     <LuClipboardList  size={24} />
                 </button>
             </td>

@@ -25,7 +25,11 @@ export default async function NewTicket(){
         const description = formData.get("description") as string;
         const customerId = formData.get("customer") as string;
 
-        
+        if (!name || !description || !customerId) {
+            return;
+            
+        }
+
         await prisma.ticket.create({
             data: {
                 name: name as string,
