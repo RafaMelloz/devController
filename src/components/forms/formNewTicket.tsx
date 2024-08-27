@@ -6,6 +6,7 @@ import { z } from "zod"
 import { InputForm } from "../inputForm";
 import { api } from "@/lib/api";
 import { useRouter } from "next/navigation";
+import { alertSuccess } from "@/utils/alerts";
 
 export function FormNewTicket({customerId}: {customerId: number}){
 
@@ -35,6 +36,7 @@ export function FormNewTicket({customerId}: {customerId: number}){
             setValue("description", "")
 
             router.refresh()
+            alertSuccess("Chamado cadastrado com sucesso!")
         }catch(err){
             console.log(err)
         }

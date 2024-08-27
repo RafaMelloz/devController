@@ -1,5 +1,6 @@
 import { authOptions } from "@/lib/auth";
 import prisma from "@/lib/prisma";
+import { alertSuccess } from "@/utils/alerts";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -41,6 +42,7 @@ export default async function NewTicket(){
             }
         })
 
+        alertSuccess("Chamado criado com sucesso!");
         redirect("/dashboard");
     }
 

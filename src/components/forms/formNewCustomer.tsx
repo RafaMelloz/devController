@@ -6,6 +6,7 @@ import { z } from "zod"
 import { InputForm } from "../inputForm"
 import { api } from "@/lib/api"
 import { useRouter } from "next/navigation"
+import { alertSuccess } from "@/utils/alerts"
 
 
 
@@ -35,7 +36,7 @@ export function FormNewCustomer() {
         })
 
         router.refresh();
-        router.replace("/dashboard/customer");
+        alertSuccess("Cliente cadastrado com sucesso")
     }
 
 

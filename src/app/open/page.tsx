@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { FormNewTicket } from "@/components/forms/formNewTicket";
 import { api } from "@/lib/api";
+import { alertError } from "@/utils/alerts";
 
 interface Customer {
     id: number;
@@ -33,7 +34,6 @@ export default function OpenTicket() {
         setValue("email", "")
     }
 
-
     async function searchCustomer(data: FormData){   
         try {
             const response = await api.get("/api/customer",{
@@ -45,8 +45,7 @@ export default function OpenTicket() {
             setCustomer(response.data.customer)
 
         } catch (error) {
-            alert("Cliente não encontrado")
-            console.log(error)
+            alertError("Cliente não encontrado")
         }
     }
 

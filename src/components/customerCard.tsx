@@ -1,6 +1,7 @@
 "use client"
 
 import { api } from "@/lib/api";
+import { alertError, alertSuccess } from "@/utils/alerts";
 import { useRouter } from "next/navigation";
 
 interface Card{
@@ -22,10 +23,11 @@ export function CustomerCard( {id ,name, email, phone}: Card) {
                 }
             })
 
-            alert(response.data.message)
+            alertSuccess(response.data.message)
             router.refresh()
-        } catch (error) {
-            alert(error)
+        } catch (err:any) {
+            alertError(err.response.data.message);
+            
         }
     }
 

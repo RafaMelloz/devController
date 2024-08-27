@@ -2,6 +2,7 @@
 
 import { api } from "@/lib/api";
 import { ModalContext } from "@/providers/modal";
+import { alertSuccess } from "@/utils/alerts";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { LuCheckCircle, LuClipboardList } from "react-icons/lu";
@@ -39,6 +40,7 @@ export function TicketItem({ ticket }: TicketItemProps) {
             });
 
             router.refresh()
+            alertSuccess('Chamado finalizado com sucesso!');
         } catch (error) {
             console.log(error);
             
